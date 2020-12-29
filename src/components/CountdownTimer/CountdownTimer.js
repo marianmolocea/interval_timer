@@ -22,18 +22,26 @@ const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [seconds, setSeconds] = useState(10);
   const [minutes, setMinutes] = useState(0);
-  const [hours, setHours] = useState(0);
+  const [hours, setHours] = useState(1);
 
   useEffect(() => {
     setTimeout(() => {
-      setTimeLeft(calculateTimeLeft(hours, minutes, seconds));
-      setSeconds(seconds - 1)
+      if(seconds) {
+        setSeconds(seconds - 1)
+      } else if (minutes) {
+        setSeconds(59)
+        setMinutes(minutes - 1)
+      } else if (hours) {
+        setSeconds(59)
+        setMinutes(59)
+        setHours(hours - 1)
+      }
     }, 1000);
   });
 
   return (
     <div>
-      Time left: {timeLeft}
+      Hours: {hours} Minutes: {minutes} Seconds: {seconds}
     </div>
   );
 };
